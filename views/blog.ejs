@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <title>Blog site</title>
+</head>
+<style>
+    h2{
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #575ed8;
+    }
+
+#your-chat{
+    max-width: 300px;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+}
+#chat{
+    max-width: 400px;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+    height: 300px;
+}
+
+#chat-window{
+    height: 300px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+
+#output p{
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+}
+
+#feedback p{
+    color: #aaa;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
+
+#output strong{
+    color: green;
+}
+
+label{
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 20px;
+}
+
+input{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: #eee;
+    border: 0;
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-family: Nunito;
+    font-size: 16px;
+}
+
+button{
+    background: darkgray;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
+#blog{
+    background-color: red;
+}
+.monika{
+    margin-top:80px;
+}
+</style>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+          <a class="navbar-brand text-uppercase" href="#">Your Page +name</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>  
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarToggler">
+            <div class="navbar-nav ml-auto">
+              <a class="nav-link" href="#">Messagerie</a>
+              <a class="nav-link" href="#">Logout</a>
+            </div>
+          </div>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-dark" type="submit">Search User</button>
+          </form>
+      </nav>
+    
+    <!--page--> 
+<div class="container-fluid monika">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3 bg-danger">
+                <p>Your bio</p>
+            </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <form class="Form-horizontal" method="POST" action="/blog">
+                    Write something :
+                    <input type="text" name ="item" placeholder="tels" require>
+                    <button type="submit" name = "submit">Send</button>
+            </form>
+            
+        </div>
+        
+        <div class="col-sm-12 col-md-3 col-lg-3 bg-danger">
+            <div id="your-chat">
+                <div id="chat-window">
+                    <div id="output"></div>
+                </div>
+                    
+                <div class="bg-info">
+                    <input id="handle" type="text" placeholder="Handle"/>
+                </div>
+                    
+                <div>
+                    <input  id="message" type="text" placeholder="message"/>
+                </div>
+            <button id="send">Send</button>
+            </div>
+        </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="/client/client.js"></script>
+
+
+</body>
+</html>
