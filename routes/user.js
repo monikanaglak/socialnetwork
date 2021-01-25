@@ -1,8 +1,10 @@
 const Router = require('express').Router
-const User = require('../models/users')//tutaj pobieramy polaczenia mongodb uzytkownika i wkladamy do zmiennej User//
-const router = Router()
+const User = require('../models/users');
+const Blog = require('../models/blog');
+const router = Router();
 const passport = require('passport');
-
+const errors = [];
+const middleWare = require('./middleware');
 const regexPassword = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
 const regexMail = "[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+"
 
@@ -20,35 +22,52 @@ function isMailGood(email){
         return true
 };
 
-router.get("/register", (request,response,next)=>{
-    response.render('register')
-});
+
 router.post("/register", (request, response, next)=>{
-    let errors = [];
     if (!isPasswordGood(request.body.password)){
         errors.push({msg:'Password must have numbers,et special signes'})
         console.log(errors)
         response.render('register', {errors})
-        //response.status(400).send("Invalid password");
     } 
     else if(!isMailGood(request.body.email)){
-        response.status(400).send("Invalid email");
+        errors.push({msg:'Email adress do not have a correct format'})
+        console.log(errors)
+        response.render('register', {errors})
     }
-    
     else{
         User.insertUser(request.body);
-        response.sendStatus(201);
+        response.redirect('/login')
+        //response.sendStatus(201);
+        
     }
-});
+})
+
 router.post('/login', (request, response, next)=>{
     passport.authenticate('local', {
         successRedirect: '/blog',
         failureRedirect: '/login',
-        failureFlash: true
+        failureFlash: 'wrong password'
       })(request, response, next);
 })
+
 router.get('/logout', (request, response, next)=>{
     request.logout();
     response.redirect('/login')
 })
+// localhost:5000/api/blog ; 
+
+router.get('/blog',  async (request,response, next)=>{
+    if (request.user === undefined){
+        request.sendStatus(401)
+    } 
+    const messages = await Blog.getPosts(request.user)
+    response.send(messages)
+})
+router.post('/blog', async (request,response, next)=>{
+    console.log('/blog', request.body)
+    await Blog.addPost(request.user, request.body);
+    response.send(await Blog.getPosts(request.user))
+    //console.log(request.body.item)
+})
+
 module.exports = router

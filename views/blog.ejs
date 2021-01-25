@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
     <title>Blog site</title>
@@ -75,23 +75,45 @@ input{
 button{
     background: darkgray;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     border: 0;
-    padding: 12px 0;
+    padding: 5px 0;
     width: 100%;
     border-radius: 0 0 2px 2px;
 }
-#blog{
-    background-color: red;
+
+.btnCom{
+    background-color:green;
 }
-.monika{
-    margin-top:80px;
+.container-fluid{
+    margin-top:100px;
 }
+#posts{
+    background-color:darkblue; /*posty uzytkownika*/
+}
+.myClassName{
+    background-color: white;
+    color:black;
+    display:block;
+    border:1px solid black;
+    width:100%;
+    margin-bottom: 10%;
+    height: 40px;
+    
+}
+.myComment{
+    display:block;
+    color:black;
+    width:auto;
+    height: 10%;
+    margin-top:5%;
+}
+
 </style>
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-          <a class="navbar-brand text-uppercase" href="#">Your Page +name</a>
+          <a class="navbar-brand text-uppercase" href="#">your </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>  
           </button>
@@ -102,53 +124,138 @@ button{
               <a class="nav-link" href="#">Logout</a>
             </div>
           </div>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-dark" type="submit">Search User</button>
+          <form class="d-flex" onsubmit="return false">
+            <input class="form-control me-2" type="text" id = "item" name="search" placeholder="Search" aria-label="Search">
+            <!--<button class="btn btn-outline-dark" type="submit">Search User</button>-->
+            <button data-ripple type="button" onclick="onSearch(this);">search</button>
           </form>
       </nav>
     
     <!--page--> 
-<div class="container-fluid monika">
-        <div class="row">
-            <div class="col-sm-12 col-md-3 col-lg-3 bg-danger">
-                <p>Your bio</p>
+<div class="container-fluid">
+<div class="row">
+    <div class="col-sm-12 col-md-3 col-lg-3">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Your name here</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Your email</h6>
+              <p class="card-text">Something about you, your interested, gender</p>
+              <a href="#" class="card-link">Become a friend</a>
             </div>
-
-        <div class="col-sm-12 col-md-6 col-lg-6">
-            <form class="Form-horizontal" method="POST" action="/blog">
-                    Write something :
-                    <input type="text" name ="item" placeholder="tels" require>
-                    <button type="submit" name = "submit">Send</button>
-            </form>
-            
         </div>
+    </div>
+<div class="d-flex flex-column  mb-3 col-sm-12 col-md-6 col-lg-6">
+    <div class="p-2">
         
-        <div class="col-sm-12 col-md-3 col-lg-3 bg-danger">
-            <div id="your-chat">
-                <div id="chat-window">
-                    <div id="output"></div>
-                </div>
-                    
-                <div class="bg-info">
-                    <input id="handle" type="text" placeholder="Handle"/>
-                </div>
-                    
-                <div>
-                    <input  id="message" type="text" placeholder="message"/>
-                </div>
-            <button id="send">Send</button>
+            <div class="form-group">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">What's new? </label>
+                    <input type="text" name="item" textarea="Express yourself" id= "post"/>
+                    <button class="btn btn-info" name= "submit" onclick="sendAndCreatePost()"/>
             </div>
+    </div>
+    <div class="p-2" id='posts'>
+                <!-- <ul>
+                    <% for (var i=0; i<posts.length; i++){ %>
+                        <textarea><%= posts[i].posts %></textarea>
+                         <button type = "button" id= "score">0</button><button id="buttonLike">Like</button>
+                             <% } %>
+                 </ul> -->
+                     
+    </div>
+</div>  
+    <div class="col-sm-12 col-md-3 col-lg-3"> 
+        <div id="your-chat">
+            <div id="chat-window">
+                    <div id="output"></div>
+            </div>
+            <div class="bg-info">
+                <input id="handle" type="text" placeholder="Name"/>
+            </div>
+            <div>
+                <input  id="message" type="text" placeholder="message"/>
+            </div>
+                <button id="send">Send</button>
         </div>
+    </div>
+      
 </div>
-
-
-
+</div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="/client/client.js"></script>
+<script>
 
+    function CreatePosts(posts){
+        const postsDiv = document.getElementById('posts')
+        for(let i = 0; i < posts.posts.length; ++i){
+            const div = document.createElement("div")//wczesniej wpisany blog
+            div.className = "myClassName"//dodajemy mu klase by go ostylowac//
+            let content = document.createTextNode(posts.posts[i]);
+            div.appendChild(content)//dodajmy element stworzony
+            const comment = document.createElement("input");//tworzymy box na komentarz//
+            comment.className= "myComment";
+            comment.value="write your comment"
+            div.appendChild(comment);
+            postsDiv.appendChild(div);
+            
+            comment.addEventListener('submit', funcSubmit);
+            function funcSubmit(e) {
+            comment.value = "";
+            var msg = document.getElementsByClassName('myComment').value;
+            console.log(msg)
+                // comment envoyer des elements de input in comment to the db?
+            }
+        }
+    }
+    async function getPosts(){ //getting from api
+        const options = {
+            method: 'GET',
+        };
+        const res = await fetch('http://localhost:5000/api/blog', options)
+        const json = await res.json()
+        return json
+    }
+    const posts = getPosts().then(posts =>{
+        console.log(posts)
+        CreatePosts(posts)
+        
+    })
+    
+    async function sendAndCreatePost(){
+        console.log('sendandCreatePost')
+        let post = document.getElementById('post').value
+        const res = await sendPost()
+        CreatePosts({posts: [post]})
+
+        // delete input post
+        document.getElementById('post').value = ''
+    }
+    
+
+    // function doPost(form){ //sending to front?
+    // const posts = {
+    //     item:form.item.value,
+    // }
+    // const optionsPost = {
+    //     method: 'POST',
+    //     body: JSON.stringify(posts), 
+    //     headers: {
+    //         'Content-type':'application/json' 
+    //     }
+    // };
+    // fetch('http://localhost:5000/blog', optionsPost)
+    //     .then(response => response.json())
+    //     .then(json => console.log(json))
+    // }
+    
+//delete post, 
+function onSearch(button){
+window.location.href = "/search/" + button.previousElementSibling.value; //redirectin user to search page
+
+}
+
+</script>
+<script src="/client/client.js"></script>
 
 </body>
 </html>

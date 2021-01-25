@@ -1,35 +1,36 @@
 const LocalStrategy = require('passport-local').Strategy;
-
+const bcrypt = require('bcrypt')
 const User = require('../models/users');
 
 function connect(passport){
     passport.use(
         new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-            console.log('called local', email, password)
-            const user = User.getUser(email).then((user)=>{
-                console.log(user, User.checkPassword(user.password, password))
+          console.log('called local', email, password)
+            const user = User.getUser(email).then((user)=>{ 
+              console.log(user, User.checkPassword(user.password, password))
                 if(!user){
-                    return done(null, false)
+                  return done(null, false)
                 }
                 else{
                     if (!User.checkPassword(user.password, password)){
-                        return done(null, false)
+                       return done(null, false)
                     }
-                    return done(null, user);
-                }
-            });
+                     return done(null, user);
+               }
+           });
             
-        }))
+       }))
+        
     passport.serializeUser((user, done)=>{
-        if (!user.id && user._id){
-            console.error('Change user._id in password.js')
-        }
+        console.log('serialize', user._id)
         done(null, user._id)
     })
     
     passport.deserializeUser((id, done)=>{
         // id -> done(null, user)
+        console.log('deserialize', id)
         User.getUserById(id).then((user)=>{
+            console.log('user', user)
             done(null, user)
         }).catch((error)=>{
             console.error(errors)

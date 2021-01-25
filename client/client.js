@@ -1,5 +1,5 @@
 
-function sendData(){
+function sendData(){                                        // wysyla dane z formularza do strony register//
     const data = {
         name:document.getElementById('name').value,
         nom:document.getElementById('nom').value,
@@ -20,7 +20,7 @@ function sendData(){
         .then(response => console.log(json))
 };
 
-function sendingLogin(){
+function sendingLogin(){                                         //wysyla dane z loginu do strony loginu//
     const dataLogin = {
         name:document.getElementById('name').value,
         password: document.getElementById('password').value,
@@ -36,6 +36,34 @@ function sendingLogin(){
         .then(response => response.json())
         .then(response => console.log(json))
 };
+
+async function sendPost(){                                                  
+    const posts = {
+        item:document.getElementById('post').value,
+    }
+    const optionsPost = {
+        method: 'POST',
+        body: JSON.stringify(posts), //sending data as a string//
+        headers: {
+            'Content-type':'application/json' //meta information//
+        }
+    };
+    console.log(posts)
+    const json = await fetch('http://localhost:5000/api/blog', optionsPost)
+    return await json.json()
+};
+/*
+const axios = require('axios');
+const userPost = {
+    _id:ObjectID,
+    post:document.getElementById('item').value;
+}
+async function addPost(x){
+    
+    let resultat = await axios.post('http://localhost:5000/blog', postUser)
+    il faut appeller la function, mais ou après submit button was pressed? onclick?
+*/
+
 // socket io//
 var socket = io.connect('http://localhost:5000');
 var message = document.getElementById('message'),
@@ -57,5 +85,5 @@ socket.on('chat', function(data){
     output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
 });
 socket.on('typing', function(data){
-    feedback.innerHTML = '<p><em>' + data + ' is typing a message...</em></p>';
+    feedback.innerHTML = '<p><em>' + data + ' is writting something...</em></p>';
 });

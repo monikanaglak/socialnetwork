@@ -4,5 +4,13 @@
             <%= error.msg %>
         </div>
     <% }); %>
+<% } %> 
+
+<% if(typeof imionas != 'undefined'){ %>
+    <% imionas.forEach(function(imiona){ %>
+    <%= imiona.msg %>
+<% }); %>
 <% } %>
+
+
 

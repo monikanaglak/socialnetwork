@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
+    <title>Search</title>
+    <style>
+        .stylowanie{
+            background-color: cadetblue;
+            height: 80px;
+            width:200px;
+            border:1px solid white;
+            text-align: center;
+
+        }
+        .headcolor{
+            background-color: #B2DFDB;
+            height: 80px;
+            width: 500px;
+            margin:auto;
+        }
+        .active{
+            color:black;
+            line-height: 80px;
+        }
+        .container-fluid{
+            margin-top:100px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+        <a class="navbar-brand text-uppercase" href="#">your </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>  
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-link" href="/blog">Your profile</a>
+            <a class="nav-link" href="#">Messagerie</a>
+            <a class="nav-link" href="#">Logout</a>
+          </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-3 col-md-6">
+                <div class="timeline-info">
+                     <ul class="nav nav-tabs">
+                        <li>
+                            <h3 class="text-center headcolor">
+                            <a class="active" data-toggle="tab" href="#people">Find a friend</a>
+                            </h3>
+                            <div class="p-2">
+                                 
+                                    <% for (var i=0; i<resultArray.length; i++){ %>
+                                         
+                                            
+                                    <h3 class="text-center">    
+                                        <%= resultArray[i].name %> <i class=" pl-4 fas fa-user-plus mb-2" onclick="addFriend()" style="cursor:pointer;"></i>Add a Friend    
+                                    </h3>
+                                    
+                                             <% } %>
+                            </div>
+                        </li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row" id="page-contents">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="central-meta">
+                            <div class="frnds">
+                                <div class="tab-content">
+                                    <div class="tab-pane active fade show" id="people">
+                                        <ul class="nearby-contct" id="search-results"></ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+   <!-- <input type="hidden" id="query">-->
+
+<script>
+    function addFriend(){
+        console.log("friend")
+    }
+    /*
+    let isSearchResult = true;
+    function showSearchResults(){
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", "/search", true);
+        ajax.onreadystatechange = function (){
+            if(this.readyState == 4 && this.status == 200){
+                var response = JSON.parse(this.responseText);
+                if(response.status == "success"){
+                    var html = "";
+                    for (var a=0; a<response.data.length; a++){
+                        var data = response.data[a];
+                        if(data._id == window.user._id){
+                            continue;
+                        }
+                        var isFriend = false;
+                        for(var b=0; b<window.user.friends.length; b++){
+                            var tempData = window.user.friends[b];
+                            if (tempData._id == data._id){
+                                idFriend = true;
+                                break;
+                            }
+                        }
+                        html += '<li>';
+                            html+='<div class="pepl-info">';
+                                html += '<h4>';
+                                    html += '<a href="/">'+ data.name +'</a>';
+                                html += '<h4>';
+                                
+                                if (isFriend){
+                                    hmtl += '<a href="javascript:void(0);" data-id="' + data._id + '" onclick = "doUnfriend(this);" class= "add-butn btn-unfriend">Unfriend</a>';
+                                }else{
+                                    hmtl += '<a href="javascript:void(0);" data-id="' + data._id + '" onclick = "sendFriendRequest(this);" class= "add-butn ">Add friend</a>';
+                                }
+                        html += '</div>';
+                    html += '</div>';
+                html += '</li>';
+                }
+                document.getElementById("search-results").innerHTML = html;
+                }else{
+                    alert(response.message);
+
+                }
+            }
+        };
+        var formData = new Form()
+        formData.append("query", document.getElementById("query").value);
+        ajax.send(formData);
+    }*/
+</script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>    
+</body>
+</html>
