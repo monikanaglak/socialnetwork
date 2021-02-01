@@ -53,13 +53,11 @@
                             <h3 class="text-center headcolor">
                             <a class="active" data-toggle="tab" href="#people">Find a friend</a>
                             </h3>
-                            <div class="p-2">
+                            <div class="p-2" id="odpowiedz">
                                  
                                     <% for (var i=0; i<resultArray.length; i++){ %>
-                                         
-                                            
                                     <h3 class="text-center">    
-                                        <%= resultArray[i].name %> <i class=" pl-4 fas fa-user-plus mb-2" onclick="addFriend()" style="cursor:pointer;"></i>Add a Friend    
+                                        <%= resultArray[i].name %><i class=" pl-4 fas fa-user-plus mb-2" onclick="addFriend()" style="cursor:pointer;"></i>Add a Friend    
                                     </h3>
                                     
                                              <% } %>
@@ -98,7 +96,8 @@
 
 <script>
     function addFriend(){
-        console.log("friend")
+        let odpowiedz = document.getElementById('odpowiedz')[0].value
+        console.log(odpowiedz)
     }
     /*
     let isSearchResult = true;

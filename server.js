@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const connect = require('./config/passport').connect;
 const routesUser = require("./routes/user");
 const routesPage = require('./routes/pages');
+const routesComment = require('./routes/comments');
 
 app.set('view engine', 'ejs');
 connect(passport);
@@ -26,9 +27,11 @@ app.use(session({
 app.use(passport.initialize()); 
 app.use(passport.session());
 app.use(flash());
-``
 app.use('/api', routesUser);
+app.use('/api', routesComment);
+
 app.use('', routesPage );
+
 
 const server = app.listen(5000,()=>{
     console.log("server listen on port 5000")

@@ -1,5 +1,6 @@
 
-function sendData(){                                        // wysyla dane z formularza do strony register//
+//**************************************************************Sending registration data ********************************************/
+function sendData(){                                      
     const data = {
         name:document.getElementById('name').value,
         nom:document.getElementById('nom').value,
@@ -10,9 +11,9 @@ function sendData(){                                        // wysyla dane z for
     }
     const options = {
         method: 'POST',
-        body: JSON.stringify(data), //sending data as a string//
+        body: JSON.stringify(data), 
         headers: {
-            'Content-type':'application/json' //meta information//
+            'Content-type':'application/json' 
         }
     };
     fetch('http://localhost:5000/register', options)
@@ -20,23 +21,24 @@ function sendData(){                                        // wysyla dane z for
         .then(response => console.log(json))
 };
 
-function sendingLogin(){                                         //wysyla dane z loginu do strony loginu//
+//************************************************************Sending login ***************************************************************/
+function sendingLogin(){                                         
     const dataLogin = {
         name:document.getElementById('name').value,
         password: document.getElementById('password').value,
     }
     const optionsLogin = {
         method: 'POST',
-        body: JSON.stringify(dataLogin), //sending data as a string//
+        body: JSON.stringify(dataLogin), 
         headers: {
-            'Content-type':'application/json' //meta information//
+            'Content-type':'application/json'
         }
     };
     fetch('http://localhost:5000/login', optionsLogin)
         .then(response => response.json())
         .then(response => console.log(json))
 };
-
+//********************************************************Sending post ******************************************************************* */
 async function sendPost(){                                                  
     const posts = {
         item:document.getElementById('post').value,
@@ -50,8 +52,26 @@ async function sendPost(){
     };
     console.log(posts)
     const json = await fetch('http://localhost:5000/api/blog', optionsPost)
-    return await json.json()
+    console.log(json)
+    return await json.json()   //? json avec method json? czy await to promis 
 };
+ //****************************************************sending comment **********************************************************************//
+ async function sendingComment(postId){
+    const dataComment = {
+        postId: postId,
+        comment: document.getElementsByClassName('myComment')[0].value
+    }
+    const optionsComment = {
+        method: 'POST',
+        body: JSON.stringify(dataComment),
+        headers: {
+            'Content-type':'application/json'
+        }
+    };
+    const json = await fetch ('http://localhost:5000/api/blog/comments', optionsComment)
+    
+};
+
 /*
 const axios = require('axios');
 const userPost = {
@@ -61,17 +81,17 @@ const userPost = {
 async function addPost(x){
     
     let resultat = await axios.post('http://localhost:5000/blog', postUser)
-    il faut appeller la function, mais ou après submit button was pressed? onclick?
+    
 */
 
-// socket io//
+//****************************************/ socket io **************************************************************************//
 var socket = io.connect('http://localhost:5000');
 var message = document.getElementById('message'),
     handle = document.getElementById('handle'),
     btn = document.getElementById('send'),
     output = document.getElementById('output');
 
-// Emit events//
+//*****************************************Emit events *************************************************************************//
 btn.addEventListener('click', function(){
   socket.emit('chat', {
       message: message.value,
@@ -80,7 +100,7 @@ btn.addEventListener('click', function(){
   message.value = "";
 });
 
-// Listen for events//
+//*******************************************/ Listen for events **************************************************************//
 socket.on('chat', function(data){
     output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
 });

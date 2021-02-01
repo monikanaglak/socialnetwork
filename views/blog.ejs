@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
@@ -97,23 +97,37 @@ button{
     display:block;
     border:1px solid black;
     width:100%;
-    margin-bottom: 10%;
+    margin-bottom: 15%;
     height: 40px;
     
 }
 .myComment{
     display:block;
     color:black;
-    width:auto;
+    width:100%;
     height: 10%;
     margin-top:5%;
 }
-
+.commentButton{
+    float: left;
+    background-color:orange;
+    margin-top:5px;
+    width:20%;
+    color:white;
+    line-height: 20px;
+}
+.deleteButton{
+    float:left;
+    width: 20%;
+    margin-top:5px;
+    line-height: 20px;
+    margin-left:5px;
+}
 </style>
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-          <a class="navbar-brand text-uppercase" href="#">your </a>
+          <a class="navbar-brand text-uppercase" href="#">This is a personal page of <%= userName %></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>  
           </button>
@@ -133,26 +147,26 @@ button{
     
     <!--page--> 
 <div class="container-fluid">
-<div class="row">
-    <div class="col-sm-12 col-md-3 col-lg-3">
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Your name here</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Your email</h6>
-              <p class="card-text">Something about you, your interested, gender</p>
-              <a href="#" class="card-link">Become a friend</a>
+    <div class="row">
+        <div class="col-sm-12 col-md-3 col-lg-3">
+           <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase">I'm <%= userName %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">My adress mail : <%= userEmail %></h6>
+                    <p class="card-text">Something about you, your interested, gender</p>
+                </div>
             </div>
         </div>
-    </div>
+    
 <div class="d-flex flex-column  mb-3 col-sm-12 col-md-6 col-lg-6">
     <div class="p-2">
-        
-            <div class="form-group">
-                <label for="colFormLabel" class="col-sm-2 col-form-label">What's new? </label>
-                    <input type="text" name="item" textarea="Express yourself" id= "post"/>
-                    <button class="btn btn-info" name= "submit" onclick="sendAndCreatePost()"/>
-            </div>
+        <div class="form-group">
+            <label for="colFormLabel" class="col-sm-2 col-form-label">What's new? </label>
+                <input type="text" name= "item" textarea= "Express yourself" id= "post"/>
+                <button class="btn btn-info" name= "submit" type="button" onclick="sendAndCreatePost()">Send</button>
+        </div>
     </div>
+
     <div class="p-2" id='posts'>
                 <!-- <ul>
                     <% for (var i=0; i<posts.length; i++){ %>
@@ -185,51 +199,98 @@ button{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
 
+    function CreateComments(commentsResponse){
+        console.log('CreateComments', commentsResponse)
+        const parentDiv = document.getElementsByClassName('myComment')[0]
+        function createSingleComment(comment){
+            const div = document.createElement("div")
+            let content = document.createTextNode(comment.item);
+            div.appendChild(content)
+            parentDiv.append(div)
+            console.log('created div')
+        }
+        //comments = [{ item: "HELLO", id: 'ewew'}]
+        let comments = commentsResponse.comments
+        for (let i = 0; i< comments.comment; ++i){
+            const comment = comments[i]
+            createSingleComment(comment)
+        }
+    }
+
     function CreatePosts(posts){
         const postsDiv = document.getElementById('posts')
         for(let i = 0; i < posts.posts.length; ++i){
             const div = document.createElement("div")//wczesniej wpisany blog
             div.className = "myClassName"//dodajemy mu klase by go ostylowac//
-            let content = document.createTextNode(posts.posts[i]);
+            let content = document.createTextNode(posts.posts[i].item); //{item: 'monika', id: ObejctID('ewew')}  != 'Monika'
             div.appendChild(content)//dodajmy element stworzony
             const comment = document.createElement("input");//tworzymy box na komentarz//
             comment.className= "myComment";
-            comment.value="write your comment"
+            comment.setAttribute("name", "item"); // ici ajouter attribute name avec value item
+            comment.value="write your comment";
             div.appendChild(comment);
+            const sendComment = document.createElement("button");
+            sendComment.className = "commentButton";
+            const textButton = document.createTextNode("send");
+            sendComment.appendChild(textButton);
+            div.appendChild(sendComment);
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "deleteButton";
+            const delButton = document.createTextNode("delete");
+            deleteButton.appendChild(delButton);
+            div.appendChild(deleteButton);
             postsDiv.appendChild(div);
-            
-            comment.addEventListener('submit', funcSubmit);
-            function funcSubmit(e) {
-            comment.value = "";
-            var msg = document.getElementsByClassName('myComment').value;
-            console.log(msg)
+            console.log(comment)
+            const postId = posts.posts[i].id
+            sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)}); // selon notre besoin
+            deleteButton.addEventListener('click', ()=>{deletingComment(postId)}); 
+            //function funcSubmit(e) {
+            //console.log("click")
                 // comment envoyer des elements de input in comment to the db?
-            }
+            //}
         }
     }
-    async function getPosts(){ //getting from api
-        const options = {
-            method: 'GET',
-        };
-        const res = await fetch('http://localhost:5000/api/blog', options)
-        const json = await res.json()
-        return json
+
+    
+
+    function deletingComment(){
+        console.log('delete')
     }
+
+
+
+
+
+async function getPosts(){ //getting from api
+    const options = {
+        method: 'GET',
+    };
+    const res = await fetch('http://localhost:5000/api/blog', options)
+    const json = await res.json()
+    return json
+}
     const posts = getPosts().then(posts =>{
         console.log(posts)
         CreatePosts(posts)
         
-    })
-    
-    async function sendAndCreatePost(){
-        console.log('sendandCreatePost')
-        let post = document.getElementById('post').value
-        const res = await sendPost()
-        CreatePosts({posts: [post]})
+        
+})
+async function sendAndCreateComment(postId){
+    console.log('send and createCommend')
+    let res = await sendingComment(postId)
+    let comment = document.getElementsByClassName('myComment')[0].value
+    CreateComments({comments: [{item: comment}]})
 
-        // delete input post
-        document.getElementById('post').value = ''
-    }
+}   
+
+async function sendAndCreatePost(){
+    console.log('sendandCreatePost')
+    let post = document.getElementById('post').value
+    const res = await sendPost()     
+    CreatePosts({posts: [{item:post}]})
+    // delete input post
+    document.getElementById('post').value = ''
+}
     
 
     // function doPost(form){ //sending to front?

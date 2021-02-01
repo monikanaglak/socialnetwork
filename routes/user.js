@@ -37,10 +37,9 @@ router.post("/register", (request, response, next)=>{
     else{
         User.insertUser(request.body);
         response.redirect('/login')
-        //response.sendStatus(201);
         
     }
-})
+});
 
 router.post('/login', (request, response, next)=>{
     passport.authenticate('local', {
@@ -48,26 +47,28 @@ router.post('/login', (request, response, next)=>{
         failureRedirect: '/login',
         failureFlash: 'wrong password'
       })(request, response, next);
-})
+});
 
 router.get('/logout', (request, response, next)=>{
     request.logout();
     response.redirect('/login')
-})
-// localhost:5000/api/blog ; 
+});
+
 
 router.get('/blog',  async (request,response, next)=>{
     if (request.user === undefined){
         request.sendStatus(401)
     } 
     const messages = await Blog.getPosts(request.user)
-    response.send(messages)
-})
+    response.send(messages) 
+});
+
 router.post('/blog', async (request,response, next)=>{
     console.log('/blog', request.body)
     await Blog.addPost(request.user, request.body);
-    response.send(await Blog.getPosts(request.user))
-    //console.log(request.body.item)
-})
+    response.send(await Blog.getPosts(request.user)) 
+    
+});
+
 
 module.exports = router
