@@ -3,149 +3,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style/blog.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
-    <title>Blog site</title>
+    <title>Personnal Site</title>
+    <style>
+ 
+    </style>
 </head>
-<style>
-    h2{
-    font-size: 18px;
-    padding: 10px 20px;
-    color: #575ed8;
-    }
-
-#your-chat{
-    max-width: 300px;
-    margin: 10px auto;
-    border: 1px solid #ddd;
-    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-    border-radius: 2px;
-}
-#chat{
-    max-width: 400px;
-    margin: 10px auto;
-    border: 1px solid #ddd;
-    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-    border-radius: 2px;
-    height: 300px;
-}
-
-#chat-window{
-    height: 300px;
-    overflow: auto;
-    background: #f9f9f9;
-}
-
-#output p{
-    padding: 14px 0px;
-    margin: 0 20px;
-    border-bottom: 1px solid #e9e9e9;
-    color: #555;
-}
-
-#feedback p{
-    color: #aaa;
-    padding: 14px 0px;
-    margin: 0 20px;
-}
-
-#output strong{
-    color: green;
-}
-
-label{
-    box-sizing: border-box;
-    display: block;
-    padding: 10px 20px;
-}
-
-input{
-    padding: 10px 20px;
-    box-sizing: border-box;
-    background: #eee;
-    border: 0;
-    display: block;
-    width: 100%;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    font-family: Nunito;
-    font-size: 16px;
-}
-
-button{
-    background: darkgray;
-    color: #fff;
-    font-size: 16px;
-    border: 0;
-    padding: 5px 0;
-    width: 100%;
-    border-radius: 0 0 2px 2px;
-}
-
-.btnCom{
-    background-color:green;
-}
-.container-fluid{
-    margin-top:100px;
-}
-#posts{
-    background-color:darkblue; /*posty uzytkownika*/
-}
-.myClassName{
-    background-color: white;
-    color:black;
-    display:block;
-    border:1px solid black;
-    width:100%;
-    margin-bottom: 15%;
-    height: 40px;
-    
-}
-.myComment{
-    display:block;
-    color:black;
-    width:100%;
-    height: 10%;
-    margin-top:5%;
-}
-.commentButton{
-    float: left;
-    background-color:orange;
-    margin-top:5px;
-    width:20%;
-    color:white;
-    line-height: 20px;
-}
-.deleteButton{
-    float:left;
-    width: 20%;
-    margin-top:5px;
-    line-height: 20px;
-    margin-left:5px;
-}
-</style>
 <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-          <a class="navbar-brand text-uppercase" href="#">This is a personal page of <%= userName %></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>  
-          </button>
-      
-          <div class="collapse navbar-collapse" id="navbarToggler">
+        <a class="navbar-brand text-uppercase" href="#">This is a personal page of <%= userName %></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>  
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
             <div class="navbar-nav ml-auto">
               <a class="nav-link" href="#">Messagerie</a>
               <a class="nav-link" href="#">Logout</a>
             </div>
-          </div>
-          <form class="d-flex" onsubmit="return false">
-            <input class="form-control me-2" type="text" id = "item" name="search" placeholder="Search" aria-label="Search">
-            <!--<button class="btn btn-outline-dark" type="submit">Search User</button>-->
-            <button data-ripple type="button" onclick="onSearch(this);">search</button>
-          </form>
-      </nav>
-    
-    <!--page--> 
+        </div>
+        <form class="d-flex" onsubmit="return false">
+            <input class="form-control me-2" type="text" id = "item" name="Search" placeholder="Search User" aria-label="Search">
+            <button data-ripple type="button" onclick="onSearch(this);">Search</button>
+        </form>
+    </nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-3 col-lg-3">
@@ -158,29 +40,30 @@ button{
             </div>
         </div>
     
-<div class="d-flex flex-column  mb-3 col-sm-12 col-md-6 col-lg-6">
-    <div class="p-2">
-        <div class="form-group">
-            <label for="colFormLabel" class="col-sm-2 col-form-label">What's new? </label>
+    <div class="d-flex flex-column  mb-3 col-sm-12 col-md-6 col-lg-6">
+        <div class="p-2">
+            <div class="form-group">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">What's new?</label>
                 <input type="text" name= "item" textarea= "Express yourself" id= "post"/>
-                <button class="btn btn-info" name= "submit" type="button" onclick="sendAndCreatePost()">Send</button>
+                <button class="btn btn-dark" name= "submit" type="button" onclick="sendAndCreatePost()">Send</button>
+            </div>
         </div>
+        <div class="p-2" id='posts'>
+        <!-- <ul>
+            <% for (var i=0; i<posts.length; i++){ %>
+                <textarea><%= posts[i].posts %></textarea>
+                 <button type = "button" id= "score">0</button><button id="buttonLike">Like</button>
+                     <% } %>
+         </ul> -->
+             
+        </div>
+        
     </div>
 
-    <div class="p-2" id='posts'>
-                <!-- <ul>
-                    <% for (var i=0; i<posts.length; i++){ %>
-                        <textarea><%= posts[i].posts %></textarea>
-                         <button type = "button" id= "score">0</button><button id="buttonLike">Like</button>
-                             <% } %>
-                 </ul> -->
-                     
-    </div>
-</div>  
     <div class="col-sm-12 col-md-3 col-lg-3"> 
         <div id="your-chat">
             <div id="chat-window">
-                    <div id="output"></div>
+                <div id="output"></div>
             </div>
             <div class="bg-info">
                 <input id="handle" type="text" placeholder="Name"/>
@@ -191,31 +74,12 @@ button{
                 <button id="send">Send</button>
         </div>
     </div>
-      
-</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
 
-    function CreateComments(commentsResponse){
-        console.log('CreateComments', commentsResponse)
-        const parentDiv = document.getElementsByClassName('myComment')[0]
-        function createSingleComment(comment){
-            const div = document.createElement("div")
-            let content = document.createTextNode(comment.item);
-            div.appendChild(content)
-            parentDiv.append(div)
-            console.log('created div')
-        }
-        //comments = [{ item: "HELLO", id: 'ewew'}]
-        let comments = commentsResponse.comments
-        for (let i = 0; i< comments.comment; ++i){
-            const comment = comments[i]
-            createSingleComment(comment)
-        }
-    }
 
     function CreatePosts(posts){
         const postsDiv = document.getElementById('posts')
@@ -242,25 +106,33 @@ button{
             postsDiv.appendChild(div);
             console.log(comment)
             const postId = posts.posts[i].id
-            sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)}); // selon notre besoin
+            sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)});  // gdzie jest funkcja sendAndCreateComment?
             deleteButton.addEventListener('click', ()=>{deletingComment(postId)}); 
-            //function funcSubmit(e) {
-            //console.log("click")
-                // comment envoyer des elements de input in comment to the db?
-            //}
         }
     }
 
-    
+function CreateComments(commentsResponse){
+        console.log('CreateComments', commentsResponse)
+        const parentDiv = document.getElementsByClassName('myComment')[0]
+        function createSingleComment(comment){
+            const div = document.createElement("div")
+            let content = document.createTextNode(comment.item);
+            div.appendChild(content)
+            parentDiv.append(div)
+            console.log('created div')
+        }
+        //comments = [{ item: "HELLO", id: 'ewew'}]
+        let comments = commentsResponse.comments
+        for (let i = 0; i< comments.comment; ++i){
+            const comment = comments[i]
+            createSingleComment(comment)
+        }
+}   
 
-    function deletingComment(){
+function deletingComment(){
         console.log('delete')
     }
-
-
-
-
-
+///********************************************getting post **********************************************************//////
 async function getPosts(){ //getting from api
     const options = {
         method: 'GET',
@@ -272,18 +144,33 @@ async function getPosts(){ //getting from api
     const posts = getPosts().then(posts =>{
         console.log(posts)
         CreatePosts(posts)
-        
-        
 })
-async function sendAndCreateComment(postId){
-    console.log('send and createCommend')
-    let res = await sendingComment(postId)
-    let comment = document.getElementsByClassName('myComment')[0].value
-    CreateComments({comments: [{item: comment}]})
+//////**********************************Getting comments***************************************************************/////
+async function getComment(){
+    const options = {
+        method: 'GET',
+    };
+    const res = await fetch('http://localhost:5000/api/blog/comments/:id', options)
+    const json = await res.json()
+    return json
+}
+    const comments = getComment().then(comments =>{
+        console.log(comments)
+        CreateComments(comments)
+})
+///*************************************Getting comments *************************************************************////
+ async function sendAndCreateComment(){  // async it's like saying make new promis//
+     console.log('sendAndCreateComment')
+     const res = await sendComment()
+     let comment = document.getElementsByClassName('myComment')[0].value;  // pobiera tekst komenatarza //
+     console.log("to jest z await send and create comment" + comment)
+     console.log("to jest z await send and create res " + res)
+     CreateComments({comments: [{item:comment}]})
+     //document.getElementsByClassName('myComment')[0].value = ''
+ }
 
-}   
-
-async function sendAndCreatePost(){
+////*********************************************************************************************************************/////
+async function sendAndCreatePost(){ // tutaj funkcja wywolywana na clicka po stworzenia postu ////
     console.log('sendandCreatePost')
     let post = document.getElementById('post').value
     const res = await sendPost()     
@@ -293,23 +180,7 @@ async function sendAndCreatePost(){
 }
     
 
-    // function doPost(form){ //sending to front?
-    // const posts = {
-    //     item:form.item.value,
-    // }
-    // const optionsPost = {
-    //     method: 'POST',
-    //     body: JSON.stringify(posts), 
-    //     headers: {
-    //         'Content-type':'application/json' 
-    //     }
-    // };
-    // fetch('http://localhost:5000/blog', optionsPost)
-    //     .then(response => response.json())
-    //     .then(json => console.log(json))
-    // }
-    
-//delete post, 
+   
 function onSearch(button){
 window.location.href = "/search/" + button.previousElementSibling.value; //redirectin user to search page
 

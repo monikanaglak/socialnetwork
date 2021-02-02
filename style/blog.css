@@ -1,0 +1,116 @@
+h2{
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #575ed8;
+}
+
+#your-chat{
+    max-width: 300px;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+}
+#chat{
+    max-width: 400px;
+    margin: 10px auto;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+    height: 300px;
+}
+
+#chat-window{
+    height: 300px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+
+#output p{
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+}
+
+#feedback p{
+    color: #aaa;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
+
+#output strong{
+    color: green;
+}
+
+label{
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 20px;
+}
+
+input{
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: #eee;
+    border: 0;
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-family: Nunito;
+    font-size: 16px;
+}
+
+button{
+    background: #37474F;
+    color: #fff;
+    font-size: 16px;
+    border: 0;
+    padding: 5px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
+}
+
+.btnCom{
+    background-color:green;
+}
+.container-fluid{
+    margin-top:100px;
+}
+#posts{
+    background-color:#90A4AE;
+}
+.myClassName{ /*wpisy*/
+    background-color: white;
+    color:black;
+    display:block;
+    border-radius:1px solid black;
+    width:100%;
+    margin-bottom: 15%;
+    height: 40px;
+    
+}
+.myComment{
+    display:block;
+    color:black;
+    width:100%;
+    height: 10%;
+    margin-top:5%; /*tu bylo 5 procent*/
+}
+.commentButton{
+    float: left;
+    background-color:#37474F;
+    margin-top:5px; /* tu bylo 5 px*/
+    width:20%;
+    color:white;
+    line-height: 20px;
+}
+.deleteButton{
+    background-color:#37474F;
+    float:left;
+    width: 20%;
+    margin-top:5px;
+    line-height: 20px;
+    margin-left:5px;
+}

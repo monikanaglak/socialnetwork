@@ -40,7 +40,7 @@ router.get('/search/:query', async (request,response)=>{
 });
     
 router.post("/search", (request,response)=>{
-     var item= request.params.query;
+     var item = request.params.query;
      resultArray.push(item);
      response.render('/search')
     }

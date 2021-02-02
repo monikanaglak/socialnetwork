@@ -8,7 +8,7 @@ const app = express();
 const passport = require('passport');
 const flash = require('connect-flash');
 const connect = require('./config/passport').connect;
-const routesUser = require("./routes/user");
+const routesUser = require('./routes/user');
 const routesPage = require('./routes/pages');
 const routesComment = require('./routes/comments');
 
@@ -17,6 +17,7 @@ connect(passport);
 
 app.use(expressLayouts);
 app.use('/client', express.static('client'));
+app.use('/style', express.static('style'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
 app.use(session({
@@ -29,7 +30,6 @@ app.use(passport.session());
 app.use(flash());
 app.use('/api', routesUser);
 app.use('/api', routesComment);
-
 app.use('', routesPage );
 
 

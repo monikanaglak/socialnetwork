@@ -26,7 +26,7 @@ function addComment(user, comment){
                             {$push: {comments: {item: comment.comment, userId: ObjectID(user._id)}}}).then(val=>{
                             }).catch(err=>{
                                 console.log(err)
-                            }); // Update
+                            }); 
         }
 
     })

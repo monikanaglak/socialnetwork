@@ -45,18 +45,18 @@ async function sendPost(){
     }
     const optionsPost = {
         method: 'POST',
-        body: JSON.stringify(posts), //sending data as a string//
+        body: JSON.stringify(posts), 
         headers: {
-            'Content-type':'application/json' //meta information//
+            'Content-type':'application/json' 
         }
     };
     console.log(posts)
     const json = await fetch('http://localhost:5000/api/blog', optionsPost)
     console.log(json)
-    return await json.json()   //? json avec method json? czy await to promis 
+    return await json.json()   
 };
  //****************************************************sending comment **********************************************************************//
- async function sendingComment(postId){
+ async function sendComment(postId){
     const dataComment = {
         postId: postId,
         comment: document.getElementsByClassName('myComment')[0].value
@@ -71,18 +71,6 @@ async function sendPost(){
     const json = await fetch ('http://localhost:5000/api/blog/comments', optionsComment)
     
 };
-
-/*
-const axios = require('axios');
-const userPost = {
-    _id:ObjectID,
-    post:document.getElementById('item').value;
-}
-async function addPost(x){
-    
-    let resultat = await axios.post('http://localhost:5000/blog', postUser)
-    
-*/
 
 //****************************************/ socket io **************************************************************************//
 var socket = io.connect('http://localhost:5000');
