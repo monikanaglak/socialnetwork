@@ -44,7 +44,7 @@ router.post("/register", (request, response, next)=>{
 router.post('/login', (request, response, next)=>{
     passport.authenticate('local', {
         successRedirect: '/blog',
-        failureRedirect: '/login',
+        failureRedirect: '/login', 
         failureFlash: 'wrong password'
       })(request, response, next);
 });
@@ -59,7 +59,11 @@ router.get('/blog',  async (request,response, next)=>{
     if (request.user === undefined){
         request.sendStatus(401)
     } 
-    const messages = await Blog.getPosts(request.user)
+    let messages = await Blog.getPosts(request.user)
+    console.log('messages', messages)
+    if (messages === null){
+        messages = []
+    }
     response.send(messages) 
 });
 

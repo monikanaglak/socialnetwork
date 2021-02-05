@@ -29,9 +29,7 @@ router.get('/blog', mustAuth,(request,response, next) => {
             
             response.render('blog', {posts:posts, userName:userName, userEmail:userEmail})
         }
-        
     })
-    
 })
 router.get('/search/:query', async (request,response)=>{
     let query = request.params.query;
@@ -67,4 +65,7 @@ router.get('/admin', (request,response)=>{
     response.render('admin');
 });
 
+router.get('/messagerie', (request,response)=>{
+    response.render('messagerie')
+})
 module.exports = router

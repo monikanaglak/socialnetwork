@@ -19,11 +19,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggler">
             <div class="navbar-nav ml-auto">
-              <a class="nav-link" href="#">Messagerie</a>
+              <a class="nav-link" href="/messagerie">Messagerie</a>
               <a class="nav-link" href="#">Logout</a>
             </div>
         </div>
-        <form class="d-flex" onsubmit="return false">
+        <form class="d-flex" onsubmit = "return false">
             <input class="form-control me-2" type="text" id = "item" name="Search" placeholder="Search User" aria-label="Search">
             <button data-ripple type="button" onclick="onSearch(this);">Search</button>
         </form>
@@ -39,13 +39,12 @@
                 </div>
             </div>
         </div>
-    
     <div class="d-flex flex-column  mb-3 col-sm-12 col-md-6 col-lg-6">
         <div class="p-2">
             <div class="form-group">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">What's new?</label>
                 <input type="text" name= "item" textarea= "Express yourself" id= "post"/>
-                <button class="btn btn-dark" name= "submit" type="button" onclick="sendAndCreatePost()">Send</button>
+                <button class="btn btn-dark" name= "submit" type="button" onclick = "sendAndCreatePost()">Send</button>
             </div>
         </div>
         <div class="p-2" id='posts'>
@@ -57,7 +56,6 @@
          </ul> -->
              
         </div>
-        
     </div>
 
     <div class="col-sm-12 col-md-3 col-lg-3"> 
@@ -79,58 +77,90 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
-
-
-    function CreatePosts(posts){
-        const postsDiv = document.getElementById('posts')
-        for(let i = 0; i < posts.posts.length; ++i){
-            const div = document.createElement("div")//wczesniej wpisany blog
-            div.className = "myClassName"//dodajemy mu klase by go ostylowac//
-            let content = document.createTextNode(posts.posts[i].item); //{item: 'monika', id: ObejctID('ewew')}  != 'Monika'
-            div.appendChild(content)//dodajmy element stworzony
-            const comment = document.createElement("input");//tworzymy box na komentarz//
-            comment.className= "myComment";
-            comment.setAttribute("name", "item"); // ici ajouter attribute name avec value item
-            comment.value="write your comment";
-            div.appendChild(comment);
+function CreatePosts(posts){
+    console.log('creating posts', posts)
+    if (posts.posts === undefined){
+        return
+    }
+    const postsDiv = document.getElementById('posts')
+        for(let i = 0; i < posts.posts.length; ++i ){
+            const divParent = document.createElement('div')
+            divParent.id = posts.posts[i].id + 'parent'
+            const section = document.createElement("section")
+            section.className = "postUser"
+            const spanText = document.createElement("span")
+            let contentText = document.createTextNode(posts.posts[i].item);
+            spanText.className = "textPost"
+            const spanBtn = document.createElement("span")
+            spanBtn.className="spanBtn"
+            let btnText = document.createTextNode("delete")
+            spanText.appendChild(contentText); 
+            spanBtn.appendChild(btnText)
+            section.appendChild(spanText)
+            section.appendChild(spanBtn);
+            postsDiv.appendChild(section);
+            spanBtn.addEventListener('click', ()=>{deletePostUser()})
+        
+        ///************Making comment place********//////////
+            const div = document.createElement("div")
+            div.className = "divComment"
+            const divInput = document.createElement("input")
+            divInput.className= "myComment";
+            divInput.id = posts.posts[i].id
+            divInput.setAttribute("name", "item"); 
+            //const divInputText = document.createTextNode("write your comment")
+            divInput.value = "write your comment"
             const sendComment = document.createElement("button");
             sendComment.className = "commentButton";
             const textButton = document.createTextNode("send");
+            //const deleteButton = document.createElement("button");
+            //deleteButton.className = "deleteButton";
+            //const delButton = document.createTextNode("delete");
             sendComment.appendChild(textButton);
+            //deleteButton.appendChild(delButton);
+            //divInput.appendChild(divInputText);
+            div.appendChild(divInput);
             div.appendChild(sendComment);
-            const deleteButton = document.createElement("button");
-            deleteButton.className = "deleteButton";
-            const delButton = document.createTextNode("delete");
-            deleteButton.appendChild(delButton);
-            div.appendChild(deleteButton);
-            postsDiv.appendChild(div);
-            console.log(comment)
+            //div.appendChild(deleteButton);
+            
+            divParent.appendChild(div)
+            postsDiv.appendChild(divParent)
             const postId = posts.posts[i].id
             sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)});  // gdzie jest funkcja sendAndCreateComment?
             deleteButton.addEventListener('click', ()=>{deletingComment(postId)}); 
         }
     }
+    
 
 function CreateComments(commentsResponse){
         console.log('CreateComments', commentsResponse)
-        const parentDiv = document.getElementsByClassName('myComment')[0]
+        if (commentsResponse.comments === undefined){
+            retur
+        }
         function createSingleComment(comment){
+            const parentDiv = document.getElementById(commentsResponse.postId+'parent')
+            console.log(comment.postId+'parent')
+            console.log(parentDiv)
             const div = document.createElement("div")
+            div.className = "commentWritten"
             let content = document.createTextNode(comment.item);
             div.appendChild(content)
-            parentDiv.append(div)
+            parentDiv.appendChild(div)
             console.log('created div')
         }
         //comments = [{ item: "HELLO", id: 'ewew'}]
         let comments = commentsResponse.comments
-        for (let i = 0; i< comments.comment; ++i){
+        console.log()
+        for (let i = 0; i< comments.length; ++i){
             const comment = comments[i]
             createSingleComment(comment)
         }
 }   
 
-function deletingComment(){
-        console.log('delete')
+function deletePostUser(){
+    //tutaj funckja usuwaja z domu i z mongodb post
+
+        console.log("object id "+ id)
     }
 ///********************************************getting post **********************************************************//////
 async function getPosts(){ //getting from api
@@ -143,47 +173,63 @@ async function getPosts(){ //getting from api
 }
     const posts = getPosts().then(posts =>{
         console.log(posts)
+        if (posts === []){
+            posts = {posts: posts}
+        }
         CreatePosts(posts)
+        getCommentsFromAllPosts(posts)
 })
 //////**********************************Getting comments***************************************************************/////
-async function getComment(){
-    const options = {
-        method: 'GET',
-    };
-    const res = await fetch('http://localhost:5000/api/blog/comments/:id', options)
-    const json = await res.json()
-    return json
-}
-    const comments = getComment().then(comments =>{
-        console.log(comments)
-        CreateComments(comments)
-})
+
 ///*************************************Getting comments *************************************************************////
- async function sendAndCreateComment(){  // async it's like saying make new promis//
-     console.log('sendAndCreateComment')
-     const res = await sendComment()
-     let comment = document.getElementsByClassName('myComment')[0].value;  // pobiera tekst komenatarza //
+ async function sendAndCreateComment(postId){  
+     const res = await sendComment(postId)
+     let comment = document.getElementById(postId).value
      console.log("to jest z await send and create comment" + comment)
-     console.log("to jest z await send and create res " + res)
-     CreateComments({comments: [{item:comment}]})
+     console.log("to jest z await send and create res " + res) // empty
+     CreateComments({postId: postId, comments: [{item:comment}]})
      //document.getElementsByClassName('myComment')[0].value = ''
  }
 
 ////*********************************************************************************************************************/////
-async function sendAndCreatePost(){ // tutaj funkcja wywolywana na clicka po stworzenia postu ////
+async function sendAndCreatePost(){ 
     console.log('sendandCreatePost')
     let post = document.getElementById('post').value
-    const res = await sendPost()     
+    try {
+        const res = await sendPost()
+    }
+    catch (exception){
+        console.error(exception)
+    }
     CreatePosts({posts: [{item:post}]})
     // delete input post
     document.getElementById('post').value = ''
 }
+
+async function getCommentsFromAllPosts(posts){
+    if (posts.posts === undefined){
+        return
+    }
+    const promises = []
+    for(let i = 0; i < posts.posts.length; ++i){
+        promises.push(getComment(posts.posts[i].id))
+    }
+    const res = await Promise.all(promises)
+    for (let i = 0 ; i < res.length; ++i){
+        const text = await res[i].text()
+        console.log('TEXT', text)
+        const comments = JSON.parse(text)
+        if (comments === {}){
+            continue
+        }
+        CreateComments(comments)
+    }
     
+}
 
-   
+////********************************************deleting posts*********************************************************////////////   
 function onSearch(button){
-window.location.href = "/search/" + button.previousElementSibling.value; //redirectin user to search page
-
+window.location.href = "/search/" + button.previousElementSibling.value; 
 }
 
 </script>

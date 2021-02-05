@@ -35,7 +35,7 @@
                             <div class="p-2" id="odpowiedz">
                                 <% for (var i=0; i<resultArray.length; i++){ %>
                                     <h3 class="text-center">  
-                                        <%= resultArray[i].name %><i class=" pl-4 fas fa-user-plus mb-2" onclick= "addFriend()" style="cursor:pointer;"></i>Add a Friend    
+                                        <%= resultArray[i].name %> <i class=" pl-4 fas fa-user-plus mb-2" onclick="addFriend('<%= resultArray[i]._id %>')"  style="cursor:pointer;"></i>Add a Friend    
                                     </h3>
                                 <% } %>
                             </div>
@@ -46,10 +46,9 @@
         </div>
     </div>
 <script>
-    function addFriend(){
-        
-        console.log(name)
-        
+    async function addFriend(id){
+       console.log(id)
+          
     }
    
 </script>

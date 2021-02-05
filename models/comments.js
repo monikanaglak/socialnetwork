@@ -5,6 +5,9 @@ async function getComment(user, postId){
     const db = mongoClient.db('socialnetwork');
     const comments = db.collection('comments');
     const result = await comments.findOne({postId: ObjectID(postId)})
+    if (result === null){
+        return {}
+    }
     return result 
 }
 

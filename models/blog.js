@@ -3,7 +3,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 
 async function getPosts(user){
-    // retourner les messages de lutilsateur
+    // retourner les messages de l'utilsateur
     const db = mongoClient.db('socialnetwork');
     const blogs = db.collection('blogs');
     const result = await blogs.findOne({userId:ObjectID(user._id)})
@@ -37,8 +37,8 @@ function addPost(user, blog){
    })
    
 }
-
-function sendComment(user, comment){
+///// ?????????????????????????????????????////////////////////////////////////////////
+/*function sendComment(user, comment){
     const db = mongoClient.db('socialnetwork');
     const blogs = db.collection('blogs');
     const comments = comments.item; 
@@ -65,30 +65,10 @@ function sendComment(user, comment){
    
 }
 
-function deletePost (user,blog){
-    const db = mongoClient.db('socialnetwork');
-    const blogs = db.collection('blogs');
-    //blogs.remove({}) posts are in array
-}
+*/
 
-/*comments
-db.posts.update({title:'post one'},
-               {
-                   $set : {
-                       comments:[
-                           {
-                               user:'marry',
-                               body:'great post',
-                               date:Date()
-                           }
-                       ]
-                   }
-               }
-        )
-        */    
+   
 module.exports = {
     addPost,
     getPosts,
-    sendComment
-    
 }

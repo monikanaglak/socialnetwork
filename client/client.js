@@ -59,7 +59,7 @@ async function sendPost(){
  async function sendComment(postId){
     const dataComment = {
         postId: postId,
-        comment: document.getElementsByClassName('myComment')[0].value
+        comment: document.getElementById(postId).value
     }
     const optionsComment = {
         method: 'POST',
@@ -71,6 +71,17 @@ async function sendPost(){
     const json = await fetch ('http://localhost:5000/api/blog/comments', optionsComment)
     
 };
+
+async function getComment(postId){
+    console.log(postId)
+    const optionsComment = {
+        method: 'GET',
+        headers: {
+            'Content-type':'application/json'
+        }
+    };
+    return fetch('http://localhost:5000/api/blog/comments/'+postId, optionsComment)
+}
 
 //****************************************/ socket io **************************************************************************//
 var socket = io.connect('http://localhost:5000');

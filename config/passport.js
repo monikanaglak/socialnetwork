@@ -27,7 +27,6 @@ function connect(passport){
     })
     
     passport.deserializeUser((id, done)=>{
-        // id -> done(null, user)
         console.log('deserialize', id)
         User.getUserById(id).then((user)=>{
             console.log('user', user)
