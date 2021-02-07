@@ -12,6 +12,7 @@ const routesUser = require('./routes/user');
 const routesPage = require('./routes/pages');
 const routesComment = require('./routes/comments');
 const routesMessagerie = require('./routes/messagerie');
+const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 connect(passport);
 
@@ -37,8 +38,8 @@ app.use('/api', routesMessagerie);
 app.use('', routesPage );
 
 
-const server = app.listen(5000,()=>{
-    console.log("server listen on port 5000")
+const server = app.listen(PORT ,()=>{
+    console.log("Server listen on port " , PORT)
 });
 
 //PARTIE SOCKET//
