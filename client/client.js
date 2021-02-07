@@ -16,7 +16,7 @@ function sendData(){
             'Content-type':'application/json' 
         }
     };
-    fetch('http://localhost:5000/register', options)
+    fetch('/register', options)
         .then(response => response.json())
         .then(response => console.log(json))
 };
@@ -34,7 +34,7 @@ function sendingLogin(){
             'Content-type':'application/json'
         }
     };
-    fetch('http://localhost:5000/login', optionsLogin)
+    fetch('/login', optionsLogin)
         .then(response => response.json())
         .then(response => console.log(json))
 };
@@ -51,7 +51,7 @@ async function sendPost(){
         }
     };
     console.log(posts)
-    const json = await fetch('http://localhost:5000/api/blog', optionsPost)
+    const json = await fetch('/api/blog', optionsPost)
     console.log(json)
     return await json.json()   
 };
@@ -70,7 +70,7 @@ async function sendMessagerie(){
         }
     };
     console.log(message)
-    const json = await fetch('http://localhost:5000/api/messagerie', optionsMessage)
+    const json = await fetch('/api/messagerie', optionsMessage)
     console.log(json)
     return await json.json()
 }
@@ -88,7 +88,7 @@ async function sendMessagerie(){
             'Content-type':'application/json'
         }
     };
-    const json = await fetch ('http://localhost:5000/api/blog/comments', optionsComment)
+    const json = await fetch ('/api/blog/comments', optionsComment)
     
 };
 //******************************************************Getting comment *************************************************************** */
@@ -100,7 +100,7 @@ async function getComment(postId){
             'Content-type':'application/json'
         }
     };
-    return fetch('http://localhost:5000/api/blog/comments/'+postId, optionsComment)
+    return fetch('/api/blog/comments/'+postId, optionsComment)
 }
 
 
@@ -111,7 +111,7 @@ function getmessage(){
 
 }
 //**********************************************************socket*************************************************************************************//
-var socket = io.connect('http://localhost:5000');
+var socket = io.connect('/');
 var message = document.getElementById('message'),
     handle = document.getElementById('handle'),
     btn = document.getElementById('send'),

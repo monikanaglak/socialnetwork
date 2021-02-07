@@ -162,7 +162,7 @@ async function getPosts(){
     const options = {
         method: 'GET',
     };
-    const res = await fetch('http://localhost:5000/api/blog', options)
+    const res = await fetch('/api/blog', options)
     const json = await res.json()
     return json
 }
