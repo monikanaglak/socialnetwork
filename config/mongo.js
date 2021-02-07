@@ -1,7 +1,7 @@
 const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
-
-const client = new MongoClient("mongodb://localhost:27017",{useNewUrlParser: true});
+const urlDb = 'mongodb+srv://monika:matisse@cluster0.zdf0i.mongodb.net/test';
+const client = new MongoClient(urlDb,{useNewUrlParser: true});
 client.connect(err=>{
     if(err){
         console.log('Sorry you are not connected', err)

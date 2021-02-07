@@ -133,7 +133,7 @@ function CreatePosts(posts){
 function CreateComments(commentsResponse){
         console.log('CreateComments', commentsResponse)
         if (commentsResponse.comments === undefined){
-            retur
+            return
         }
         function createSingleComment(comment){
             const parentDiv = document.getElementById(commentsResponse.postId+'parent')
