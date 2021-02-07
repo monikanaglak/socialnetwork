@@ -3,7 +3,7 @@ const ObjectID = require('mongodb').ObjectID;
 
 
 async function getPosts(user){
-    // retourner les messages de l'utilsateur
+    // give back post from the user//
     const db = mongoClient.db('socialnetwork');
     const blogs = db.collection('blogs');
     const result = await blogs.findOne({userId:ObjectID(user._id)})
@@ -22,7 +22,6 @@ function addPost(user, blog){
                 posts:[{item : blog.item, id: new ObjectID()}],
                 comments:[],
                 date: Date()
-                
             })  
         }
         else{
@@ -34,40 +33,8 @@ function addPost(user, blog){
                                 console.log(err)
                             }); 
         }
-   })
-   
+    })
 }
-///// ?????????????????????????????????????////////////////////////////////////////////
-/*function sendComment(user, comment){
-    const db = mongoClient.db('socialnetwork');
-    const blogs = db.collection('blogs');
-    const comments = comments.item; 
-    blogs.findOne({userId: ObjectID(user._id)}).then(existingComments=>{
-        console.log('existingComments', existingComments)
-        if (existingComments === null){
-            return blogs.insertOne({
-                userId: user._id,
-                comments:[comment.item],
-                date: Date()
-                
-            })
-        }
-        else{
-            return blogs.updateOne
-                            ({ userId:ObjectID(user._id)}, 
-                            {$push: {comments: comment.item}}).then(val=>{
-                               
-                            }).catch(err=>{
-                                console.log(err)
-                            }); 
-        }
-   })
-   
-}
-
-*/
-
-   
 module.exports = {
     addPost,
     getPosts,

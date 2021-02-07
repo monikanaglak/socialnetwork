@@ -83,27 +83,29 @@ button{
     background-color:#90A4AE;
 }
 .postUser{ 
-    display:flex;/*wpisy*/
+    display:flex;
     padding: 5px;
     margin: 10px auto;
     width: 100%;
     border:1px solid black;
 }
 .textPost{
-    background-color:yellow;
+    background-color:#475B6F;
     padding:2%;
     width:80%;
-    color:black;
+    color:white;
+    border-radius: 4px;
 }
 .spanBtn{
-    background:cadetblue;
+    background:#475B6F;
     padding:0 5px;
     border-radius: 4px;
     cursor: pointer;
     color: white;
-    margin-left:2%;
+    margin-left:4%;
     height: 50px;
     line-height:50px;
+    
 }
 .divComment{
     margin:5px auto;
@@ -122,7 +124,7 @@ button{
 }
 .commentButton{
     background-color:#37474F;
-    margin-top:2px; /* tu bylo 5 px*/
+    margin-top:2px; 
     width:20%;
     color:white;
     line-height: 20px;
@@ -135,5 +137,9 @@ button{
     margin-left:5px;
 }
 .commentWritten{
-    background-color: red;
+    background-color:lightgray;
+    padding:2px;
+    margin:5px;
+    width: 100%;
+    color:black;
 }

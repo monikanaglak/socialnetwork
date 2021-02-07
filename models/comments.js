@@ -14,8 +14,6 @@ async function getComment(user, postId){
 function addComment(user, comment){
     const db = mongoClient.db('socialnetwork');
     const comments = db.collection('comments');
-    
-    // comment = {postId: "ewewewe", comment: "Hello"}
     comments.findOne({postId: ObjectID(comment.postId)}).then(existingComment=>{
         if (existingComment === null){
             return comments.insertOne({
@@ -31,7 +29,6 @@ function addComment(user, comment){
                                 console.log(err)
                             }); 
         }
-
     })
 }
 module.exports = {

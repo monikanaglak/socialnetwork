@@ -6,10 +6,7 @@
     <link rel="stylesheet" href="style/blog.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
-    <title>Personnal Site</title>
-    <style>
- 
-    </style>
+    <title>Personnal Page</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
@@ -20,14 +17,15 @@
         <div class="collapse navbar-collapse" id="navbarToggler">
             <div class="navbar-nav ml-auto">
               <a class="nav-link" href="/messagerie">Messagerie</a>
-              <a class="nav-link" href="#">Logout</a>
+              <a class="nav-link" href="/api/logout">Logout</a>
             </div>
         </div>
         <form class="d-flex" onsubmit = "return false">
-            <input class="form-control me-2" type="text" id = "item" name="Search" placeholder="Search User" aria-label="Search">
-            <button data-ripple type="button" onclick="onSearch(this);">Search</button>
+            <input class="form-control me-2" type="text" id = "item" name = "Search" placeholder= "Search User" aria-label= "Search">
+            <button data-ripple type= "button" onclick= "onSearch(this);"> Search </button>
         </form>
     </nav>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-3 col-lg-3">
@@ -44,7 +42,7 @@
             <div class="form-group">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">What's new?</label>
                 <input type="text" name= "item" textarea= "Express yourself" id= "post"/>
-                <button class="btn btn-dark" name= "submit" type="button" onclick = "sendAndCreatePost()">Send</button>
+                <button class="btn btn-dark" name= "submit" type="button" onclick = "sendAndCreatePost()"> Send </button>
             </div>
         </div>
         <div class="p-2" id='posts'>
@@ -54,7 +52,6 @@
                  <button type = "button" id= "score">0</button><button id="buttonLike">Like</button>
                      <% } %>
          </ul> -->
-             
         </div>
     </div>
 
@@ -69,7 +66,7 @@
             <div>
                 <input  id="message" type="text" placeholder="message"/>
             </div>
-                <button id="send">Send</button>
+            <button id="send">Send</button>
         </div>
     </div>
 </div>
@@ -77,6 +74,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
+
 function CreatePosts(posts){
     console.log('creating posts', posts)
     if (posts.posts === undefined){
@@ -109,7 +107,7 @@ function CreatePosts(posts){
             divInput.id = posts.posts[i].id
             divInput.setAttribute("name", "item"); 
             //const divInputText = document.createTextNode("write your comment")
-            divInput.value = "write your comment"
+            divInput.value = "write your comment and you name "
             const sendComment = document.createElement("button");
             sendComment.className = "commentButton";
             const textButton = document.createTextNode("send");
@@ -126,8 +124,8 @@ function CreatePosts(posts){
             divParent.appendChild(div)
             postsDiv.appendChild(divParent)
             const postId = posts.posts[i].id
-            sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)});  // gdzie jest funkcja sendAndCreateComment?
-            deleteButton.addEventListener('click', ()=>{deletingComment(postId)}); 
+            sendComment.addEventListener('click', ()=>{sendAndCreateComment(postId)}); 
+            //deleteButton.addEventListener('click', ()=>{deletingComment(postId)}); 
         }
     }
     
@@ -148,7 +146,6 @@ function CreateComments(commentsResponse){
             parentDiv.appendChild(div)
             console.log('created div')
         }
-        //comments = [{ item: "HELLO", id: 'ewew'}]
         let comments = commentsResponse.comments
         console.log()
         for (let i = 0; i< comments.length; ++i){
@@ -156,14 +153,12 @@ function CreateComments(commentsResponse){
             createSingleComment(comment)
         }
 }   
-
+//////****************************************Delete post user ********************************************************/////////
 function deletePostUser(){
-    //tutaj funckja usuwaja z domu i z mongodb post
-
-        console.log("object id "+ id)
-    }
+    console.log("object id "+ id)
+}
 ///********************************************getting post **********************************************************//////
-async function getPosts(){ //getting from api
+async function getPosts(){ 
     const options = {
         method: 'GET',
     };
@@ -178,20 +173,17 @@ async function getPosts(){ //getting from api
         }
         CreatePosts(posts)
         getCommentsFromAllPosts(posts)
-})
-//////**********************************Getting comments***************************************************************/////
+});
 
-///*************************************Getting comments *************************************************************////
+
+///*************************************Send and Create comments *************************************************************////
  async function sendAndCreateComment(postId){  
      const res = await sendComment(postId)
      let comment = document.getElementById(postId).value
-     console.log("to jest z await send and create comment" + comment)
-     console.log("to jest z await send and create res " + res) // empty
      CreateComments({postId: postId, comments: [{item:comment}]})
-     //document.getElementsByClassName('myComment')[0].value = ''
  }
 
-////*********************************************************************************************************************/////
+////******************************************Send and create post ***************************************************************************////
 async function sendAndCreatePost(){ 
     console.log('sendandCreatePost')
     let post = document.getElementById('post').value
@@ -202,10 +194,9 @@ async function sendAndCreatePost(){
         console.error(exception)
     }
     CreatePosts({posts: [{item:post}]})
-    // delete input post
     document.getElementById('post').value = ''
 }
-
+//***************get comments from all posts **************///
 async function getCommentsFromAllPosts(posts){
     if (posts.posts === undefined){
         return
@@ -224,7 +215,6 @@ async function getCommentsFromAllPosts(posts){
         }
         CreateComments(comments)
     }
-    
 }
 
 ////********************************************deleting posts*********************************************************////////////   

@@ -6,6 +6,29 @@
     <link rel="stylesheet" href="style/search.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <title>Search Page</title>
+    <style>
+    .container-fluid{
+        margin-top:100px;
+    }
+    .stylowanie{
+    background-color: cadetblue;
+    height: 80px;
+    width:200px;
+    border:1px solid white;
+    text-align: center;
+    }
+    .headcolor{
+    background-color: #B2DFDB;
+    height: 80px;
+    width: 500px;
+    margin:auto;
+    }
+    .active{
+    color:black;
+    line-height: 80px;
+    }
+
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
@@ -30,7 +53,7 @@
                      <ul class="nav nav-tabs">
                         <li>
                             <h3 class="text-center headcolor">
-                                <a class="active" data-toggle="tab" href="#people">Find a friend</a>
+                                <p class="active" data-toggle="tab">Find a friend</p>
                             </h3>
                             <div class="p-2" id="odpowiedz">
                                 <% for (var i=0; i<resultArray.length; i++){ %>

@@ -11,7 +11,7 @@ const connect = require('./config/passport').connect;
 const routesUser = require('./routes/user');
 const routesPage = require('./routes/pages');
 const routesComment = require('./routes/comments');
-
+const routesMessagerie = require('./routes/messagerie');
 app.set('view engine', 'ejs');
 connect(passport);
 
@@ -25,11 +25,15 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+
 app.use(passport.initialize()); 
 app.use(passport.session());
 app.use(flash());
+
+
 app.use('/api', routesUser);
 app.use('/api', routesComment);
+app.use('/api', routesMessagerie);
 app.use('', routesPage );
 
 
@@ -42,7 +46,6 @@ const io = socket(server);
 io.on("connection", function(socket){
     console.log("you made socket connection", socket.id)
     socket.on('chat', function(data){
-        // console.log(data);
         io.sockets.emit('chat', data);
     });
 });

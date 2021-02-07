@@ -17,6 +17,8 @@ function connect(passport){
                     }
                      return done(null, user);
                }
+           }).catch(err=>{
+               return done(null, false)
            });
             
        }))

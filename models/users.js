@@ -5,25 +5,23 @@ const client = require('../config/mongo').client
 const ObjectID = require('mongodb').ObjectID;   
 const { request } = require('express');
 
-
-
 function getUser(email){
     const db = client.db('socialnetwork');
     const koleckja = db.collection('users');
     const user = koleckja.findOne({email:email})
     return user
-}
+};
 
 function getUserById(id){
     const db = client.db('socialnetwork');
     const koleckja = db.collection('users');
     const user = koleckja.findOne({_id: new ObjectID(id)})
     return user
-}
+};
 
 function checkPassword(hashedPassword, notHashedPassword){
     return bcrypt.compareSync(notHashedPassword, hashedPassword)
-}
+};
 
 function searchUser(username){
     const db = client.db('socialnetwork');
@@ -31,7 +29,7 @@ function searchUser(username){
     const regex = '^' + username.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const user = koleckja.find({ "name": {"$regex": regex, '$options': 'i'}})
     return user
-}
+};
 
 function insertUser(user){
     console.log('in insert user')
@@ -54,13 +52,10 @@ function insertUser(user){
     });
 };
 
-
-
 module.exports = {
     insertUser,
     getUser,
     checkPassword,
     getUserById,
     searchUser
-
 }

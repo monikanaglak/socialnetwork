@@ -23,9 +23,9 @@ function isMailGood(email){
 };
 
 
-router.post("/register", (request, response, next)=>{
+router.post('/register', (request, response, next)=>{
     if (!isPasswordGood(request.body.password)){
-        errors.push({msg:'Password must have numbers,et special signes'})
+        errors.push({msg:'Password must have numbers,and  special signes'})
         console.log(errors)
         response.render('register', {errors})
     } 
@@ -45,12 +45,13 @@ router.post('/login', (request, response, next)=>{
     passport.authenticate('local', {
         successRedirect: '/blog',
         failureRedirect: '/login', 
-        failureFlash: 'wrong password'
+        failureFlash: true
       })(request, response, next);
 });
 
-router.get('/logout', (request, response, next)=>{
+router.get('/logout', (request, response)=>{
     request.logout();
+    request.flash('success_msg', 'You are logged out');
     response.redirect('/login')
 });
 
@@ -71,7 +72,6 @@ router.post('/blog', async (request,response, next)=>{
     console.log('/blog', request.body)
     await Blog.addPost(request.user, request.body);
     response.send(await Blog.getPosts(request.user)) 
-    
 });
 
 

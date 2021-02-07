@@ -6,47 +6,32 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/superhero/bootstrap.min.css">
     <title>Login Page</title>
 </head>
-
 <body>
-
-<div class="container-fluid">
-  <div class="row pt-5">
-    <div class="col-md-6 m-auto">
-      <div class="card card-body">
-        <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Login</h1>
-        <h3 class="text-center mb-2"><a href="">Admin</a></h3>
-        <%- include ("./partials/messages"); %>
+  <div class="container-fluid">
+    <div class="row pt-5">
+      <div class="col-md-6 m-auto">
+        <div class="card card-body">
+          <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Login</h1>
+            <h3 class="text-center mb-2"><a href="">Admin</a></h3>
+              <%- include ("./partials/messages"); %>
           <form action="/api/login" method="POST">
             <div class="form-group">
               <label for="email">Email</label>
-                <input
-                  type="email"
-                    id="email"
-                      name="email"
-                        class="form-control"
-                          placeholder="Enter Email"
-                />
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"/>
             </div>
-
             <div class="form-group">
               <label for="password">Password</label>
-                <input
-                  type="password"
-                    id="password"
-                      name="password"
-                        class="form-control"
-                          placeholder="Enter Password"
-                />
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"/>
             </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
-      <p class="lead mt-4">
-        You don't have an account?<a href="/register">Register</a>
-      </p>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </form>
+          <p class="lead mt-4">
+             You don't have an account?<a href="/register">Register</a>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-</div>
+ </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>

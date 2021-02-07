@@ -29,22 +29,23 @@ router.get('/blog', mustAuth,(request,response, next) => {
             
             response.render('blog', {posts:posts, userName:userName, userEmail:userEmail})
         }
-    })
-})
+    });
+});
+
 router.get('/search/:query', async (request,response)=>{
     let query = request.params.query;
     const resultArray = await User.searchUser(query).limit(10).toArray()
     response.render('search', {resultArray: resultArray})
 });
     
-router.post("/search", (request,response)=>{
+router.post('/search', (request,response)=>{
      var item = request.params.query;
      resultArray.push(item);
      response.render('/search')
     }
 );
 
-router.get("/register", (request,response,next)=>{
+router.get('/register', (request,response,next)=>{
     response.render('register')
 });
 
@@ -67,5 +68,6 @@ router.get('/admin', (request,response)=>{
 
 router.get('/messagerie', (request,response)=>{
     response.render('messagerie')
-})
+});
+
 module.exports = router

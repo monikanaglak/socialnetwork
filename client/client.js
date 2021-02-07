@@ -21,7 +21,7 @@ function sendData(){
         .then(response => console.log(json))
 };
 
-//************************************************************Sending login ***************************************************************/
+//************************************************************Sending data login ***************************************************************/
 function sendingLogin(){                                         
     const dataLogin = {
         name:document.getElementById('name').value,
@@ -38,7 +38,7 @@ function sendingLogin(){
         .then(response => response.json())
         .then(response => console.log(json))
 };
-//********************************************************Sending post ******************************************************************* */
+//********************************************************Sending data post ******************************************************************* */
 async function sendPost(){                                                  
     const posts = {
         item:document.getElementById('post').value,
@@ -55,7 +55,27 @@ async function sendPost(){
     console.log(json)
     return await json.json()   
 };
- //****************************************************sending comment **********************************************************************//
+
+//*******************************sending message to user************************************************************************************* */
+async function sendMessagerie(){
+    const messageUser = {
+     destinateur : document.getElementById('userName').value,
+     textMessage : document.getElementById('messagerie').value
+    }
+    const optionsMessage = {
+        method: 'POST',
+        body: JSON.stringify(messageUser),
+        headers: {
+            'Content-type':'application/json'
+        }
+    };
+    console.log(message)
+    const json = await fetch('http://localhost:5000/api/messagerie', optionsMessage)
+    console.log(json)
+    return await json.json()
+}
+
+ //****************************************************Sending data comment ********************************************************************//
  async function sendComment(postId){
     const dataComment = {
         postId: postId,
@@ -71,7 +91,7 @@ async function sendPost(){
     const json = await fetch ('http://localhost:5000/api/blog/comments', optionsComment)
     
 };
-
+//******************************************************Getting comment *************************************************************** */
 async function getComment(postId){
     console.log(postId)
     const optionsComment = {
@@ -83,7 +103,14 @@ async function getComment(postId){
     return fetch('http://localhost:5000/api/blog/comments/'+postId, optionsComment)
 }
 
-//****************************************/ socket io **************************************************************************//
+
+
+
+//*************************************************************Getting message ********************************************************** */
+function getmessage(){
+
+}
+//**********************************************************socket*************************************************************************************//
 var socket = io.connect('http://localhost:5000');
 var message = document.getElementById('message'),
     handle = document.getElementById('handle'),
@@ -96,6 +123,7 @@ btn.addEventListener('click', function(){
       message: message.value,
       handle: handle.value
   });
+
   message.value = "";
 });
 
@@ -104,5 +132,5 @@ socket.on('chat', function(data){
     output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
 });
 socket.on('typing', function(data){
-    feedback.innerHTML = '<p><em>' + data + ' is writting something...</em></p>';
+    feedback.innerHTML = '<p><em>' + data + ' is writting ...</em></p>';
 });
